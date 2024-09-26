@@ -1,6 +1,9 @@
+import HttpRequest from "@/utils/HttpRequest";
 import Head from "next/head";
 
-export default function Home() {
+export default function Home({ data }) {
+  console.log("data: ", data);
+
   return (
     <>
       <Head>
@@ -19,4 +22,16 @@ export default function Home() {
       </Head>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const response = await HttpRequest.get();
+
+  console.log("response: ", response);
+
+  return {
+    props: {
+      data: response,
+    },
+  };
 }
