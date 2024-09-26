@@ -1,34 +1,59 @@
-import { faEarth, faGear, faMoon } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleRight,
+  faEarth,
+  faGear,
+  faMoon,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const themeState = useSelector((state) => state.theme);
 
   const [currentTheme, setCurrentTheme] = useState("");
-  const [dropdown, setDropdown] = useState(false);
-  const [dropdownDisplay, setDropdownDisplay] = useState("none");
+  const [settingsDropdown, setSettingsDropdown] = useState(false);
+  const [settingsDropdownDisplay, setSettingsDropdownDisplay] =
+    useState("none");
+
+  const settingsDropdownRef = useRef();
 
   const { theme } = themeState;
 
-  const handleDropdown = () => setDropdown(!dropdown);
+  const handleSettingsDropdown = () => setSettingsDropdown(!settingsDropdown);
 
-  console.log("dropdown: ", dropdown);
+  console.log("Settings Dropdown: ", settingsDropdown);
+
+  useEffect(function () {
+    function handleClickOutSide(e) {
+      if (
+        settingsDropdownRef.current &&
+        !settingsDropdownRef.current.contains(e.target) &&
+        !e.target.classList.contains("dropdown")
+      ) {
+        setSettingsDropdown(false);
+      }
+    }
+
+    document.addEventListener("click", handleClickOutSide, true);
+
+    return () =>
+      document.removeEventListener("click", handleClickOutSide, true);
+  }, []);
 
   useEffect(
     function () {
       const identifier = setTimeout(function () {
-        if (!dropdown) setDropdownDisplay("none");
+        if (!settingsDropdown) setSettingsDropdownDisplay("none");
       }, 100);
 
-      if (dropdown) setDropdownDisplay("block");
+      if (settingsDropdown) setSettingsDropdownDisplay("block");
 
       return () => clearTimeout(identifier);
     },
-    [dropdown]
+    [settingsDropdown]
   );
 
   useEffect(
@@ -55,31 +80,38 @@ const Navbar = () => {
             icon={faGear}
             size="lg"
             className="cursor-pointer"
-            onClick={handleDropdown}
+            onClick={handleSettingsDropdown}
+            ref={settingsDropdownRef}
           />
           <div
             style={{
-              display: dropdownDisplay,
+              display: settingsDropdownDisplay,
               width: "240px",
             }}
-            className="dropdown absolute rounded border top-full right-full p-6 select-none transition-all"
+            className="dropdown absolute rounded border top-full right-full select-none transition-all"
           >
-            <div className="dropdown-header">
-              <h6 className="text-sm flex items-center gap-2">
+            <div className="dropdown-header p-4">
+              <h6 className="flex items-center text-sm gap-2">
                 <FontAwesomeIcon icon={faGear} />
                 <span>Settings</span>
               </h6>
             </div>
-            <hr className="my-4" />
+            <hr className="my-1" />
             <div className="dropdown-body">
-              <ul className="space-y-3">
-                <li className="flex items-center hover:bg-light cursor-pointer transition-all gap-2">
-                  <FontAwesomeIcon icon={faMoon} />
-                  <span className="text-sm">Theme</span>
+              <ul>
+                <li className="flex items-center justify-between hover:bg-light cursor-pointer transition-all px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faMoon} />
+                    <span className="text-sm">Theme</span>
+                  </div>
+                  <FontAwesomeIcon icon={faAngleRight} size="sm" />
                 </li>
-                <li className="flex items-center hover:bg-light cursor-pointer transition-all gap-2">
-                  <FontAwesomeIcon icon={faEarth} />
-                  <span className="text-sm">Language</span>
+                <li className="flex items-center justify-between hover:bg-light cursor-pointer transition-all px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faEarth} />
+                    <span className="text-sm">Language</span>
+                  </div>
+                  <FontAwesomeIcon icon={faAngleRight} size="sm" />
                 </li>
               </ul>
             </div>
