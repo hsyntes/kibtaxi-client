@@ -12,11 +12,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { themeSliceActions } from "@/store/theme/theme.slice";
 
 const Navbar = () => {
   const themeState = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
   const [currentTheme, setCurrentTheme] = useState("");
   const [settingsDropdown, setSettingsDropdown] = useState(false);
@@ -24,12 +26,17 @@ const Navbar = () => {
     useState("none");
   const [settingsDropdownCurrentPage, setSettingsDropdownCurrentPage] =
     useState(0);
+  const [themeSettingsPageDisplay, setThemeSettingsPageDisplay] =
+    useState("none");
+  const [languageSettingsPageDisplay, setLanguageSettingsPageDisplay] =
+    useState("none");
 
   const settingsDropdownRef = useRef();
 
   const { theme } = themeState;
 
   const handleSettingsDropdown = () => setSettingsDropdown(!settingsDropdown);
+  const handleSetTheme = (value) => dispatch(themeSliceActions.setTheme(value));
 
   useEffect(function () {
     function handleClickOutSide(e) {
@@ -39,7 +46,10 @@ const Navbar = () => {
         !e.target.classList.contains("dropdown")
       ) {
         setSettingsDropdown(false);
-        setSettingsDropdownCurrentPage(0);
+
+        setTimeout(function () {
+          setSettingsDropdownCurrentPage(0);
+        }, 100);
       }
     }
 
@@ -126,7 +136,12 @@ const Navbar = () => {
                   <ul>
                     <li
                       className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
-                      onClick={() => setSettingsDropdownCurrentPage(1)}
+                      onClick={function () {
+                        setSettingsDropdownCurrentPage(1);
+
+                        setThemeSettingsPageDisplay("block");
+                        setLanguageSettingsPageDisplay("none");
+                      }}
                     >
                       <div className="dropdown flex items-center gap-2">
                         <FontAwesomeIcon icon={faMoon} className="dropdown" />
@@ -138,7 +153,15 @@ const Navbar = () => {
                         className="dropdown"
                       />
                     </li>
-                    <li className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3">
+                    <li
+                      className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
+                      onClick={function () {
+                        setSettingsDropdownCurrentPage(1);
+
+                        setThemeSettingsPageDisplay("none");
+                        setLanguageSettingsPageDisplay("block");
+                      }}
+                    >
                       <div className="dropdown flex items-center gap-2">
                         <FontAwesomeIcon icon={faEarth} className="dropdown" />
                         <span className="text-sm dropdown">Language</span>
@@ -153,6 +176,7 @@ const Navbar = () => {
                 </div>
               </motion.div>
               <motion.div
+                style={{ display: themeSettingsPageDisplay }}
                 className="dropdown min-w-full"
                 animate={{
                   translateX: `-${settingsDropdownCurrentPage * 100}%`,
@@ -161,7 +185,12 @@ const Navbar = () => {
                 <div className="dropdown dropdown-header p-4">
                   <div
                     className="dropdown flex items-center text-sm gap-1 hover:text-primary cursor-pointer transition-all"
-                    onClick={() => setSettingsDropdownCurrentPage(0)}
+                    onClick={function () {
+                      setSettingsDropdownCurrentPage(0);
+
+                      setThemeSettingsPageDisplay("none");
+                      setLanguageSettingsPageDisplay("none");
+                    }}
                   >
                     <FontAwesomeIcon icon={faAngleLeft} />
                     <span className="dropdown font-semibold">Back</span>
@@ -173,7 +202,10 @@ const Navbar = () => {
                 />
                 <div className="dropdown dropdown-body">
                   <ul>
-                    <li className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3">
+                    <li
+                      className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
+                      onClick={() => handleSetTheme("light")}
+                    >
                       <div className="dropdown flex items-center gap-2">
                         <FontAwesomeIcon icon={faSun} className="dropdown" />
                         <span className="dropdown text-sm">Light</span>
@@ -185,11 +217,68 @@ const Navbar = () => {
                         className="dropdown text-primary"
                       />
                     </li>
-                    <li className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3">
+                    <li
+                      className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
+                      onClick={() => handleSetTheme("dark")}
+                    >
                       <div className="dropdown flex items-center gap-2">
                         <FontAwesomeIcon icon={faMoon} className="dropdown" />
                         <span className="text-sm dropdown">Dark</span>
                       </div>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        size="sm"
+                        style={{ display: currentTheme !== "dark" && "none" }}
+                        className="dropdown text-primary"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
+              <motion.div
+                style={{ display: languageSettingsPageDisplay }}
+                className="dropdown min-w-full"
+                animate={{
+                  translateX: `-${settingsDropdownCurrentPage * 100}%`,
+                }}
+              >
+                <div className="dropdown dropdown-header p-4">
+                  <div
+                    className="dropdown flex items-center text-sm gap-1 hover:text-primary cursor-pointer transition-all"
+                    onClick={function () {
+                      setSettingsDropdownCurrentPage(0);
+
+                      setThemeSettingsPageDisplay("none");
+                      setLanguageSettingsPageDisplay("none");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                    <span className="dropdown font-semibold">Back</span>
+                  </div>
+                </div>
+                <hr
+                  style={{ height: 0.5 }}
+                  className="border-none bg-border dark:bg-border-dark"
+                />
+                <div className="dropdown dropdown-body">
+                  <ul>
+                    <li
+                      className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
+                      // onClick={() => handleSetTheme("light")}
+                    >
+                      <span className="dropdown text-sm">English</span>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        size="sm"
+                        style={{ display: currentTheme !== "light" && "none" }}
+                        className="dropdown text-primary"
+                      />
+                    </li>
+                    <li
+                      className="dropdown flex items-center justify-between hover:bg-light hover:dark:bg-dark cursor-pointer transition-all px-4 py-3"
+                      // onClick={() => handleSetTheme("dark")}
+                    >
+                      <span className="text-sm dropdown">Turkish</span>
                       <FontAwesomeIcon
                         icon={faCheck}
                         size="sm"
