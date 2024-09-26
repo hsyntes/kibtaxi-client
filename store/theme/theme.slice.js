@@ -3,8 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 function getLocalStorageTheme() {
   let theme;
 
-  if (typeof window !== "undefined")
-    theme = localStorage.getItem("theme") || null;
+  if (typeof window !== "undefined") {
+    theme = localStorage.getItem("theme");
+
+    if (!theme)
+      theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+  }
 
   return theme;
 }
