@@ -11,6 +11,12 @@
 
   --color-light: 245, 245, 245;
   --color-white: 255, 255, 255;
+
+  --color-muted: 0, 0, 0, 0.5;
+  --color-muted-dark: 255, 255, 255, 0.5;
+
+  --color-border: 0, 0, 0, 0.2;
+  --color-border-dark: 255, 255, 255, 0.2;
 }
 
 body {

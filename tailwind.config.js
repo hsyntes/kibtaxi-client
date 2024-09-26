@@ -19,6 +19,25 @@ module.exports = {
 
         light: "rgb(var(--color-light))",
         white: "rgb(var(--color-white))",
+
+        muted: {
+          DEFAULT: "rgb(var(--color-muted))",
+          dark: "rgb(var(--color-muted-dark))",
+        },
+
+        border: {
+          DEFAULT: "rgb(var(--color-border))",
+          dark: "rgb(var(--color-border-dark))",
+        },
+      },
+
+      borderColor: {
+        DEFAULT: "rgb(var(--color-border))",
+        dark: "rgb(var(--color-border-dark))",
+      },
+
+      borderRadius: {
+        DEFAULT: ".5rem",
       },
     },
   },

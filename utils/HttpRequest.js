@@ -14,6 +14,15 @@ class HttpRequest {
         }
       );
 
+      //   const response = await axios.get(
+      //     `${process.env.NEXT_PUBLIC_API}/${endpoint}&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`,
+      //     {
+      //       params: {
+      //         ...payload,
+      //       },
+      //     }
+      //   );
+
       return response?.data;
     } catch (e) {
       console.error(e);
