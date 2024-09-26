@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./ui/Navbar";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+
+config.autoAddCss = false;
 
 const Layout = ({ children }) => {
   const themeState = useSelector((state) => state.theme);
