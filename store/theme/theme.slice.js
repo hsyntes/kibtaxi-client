@@ -15,7 +15,7 @@ const themeSlice = createSlice({
     theme: getLocalStorageTheme(),
   },
   reducers: {
-    switchTheme(state, action) {
+    setTheme(state, action) {
       const { payload } = action;
 
       state.theme = payload;
@@ -24,3 +24,6 @@ const themeSlice = createSlice({
     },
   },
 });
+
+export const themeSliceActions = themeSlice.actions;
+export default themeSlice.reducer;
