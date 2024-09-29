@@ -11,8 +11,6 @@ const Layout = ({ children }) => {
 
   const { theme } = themeState;
 
-  console.log("theme: ", theme);
-
   useEffect(
     function () {
       if (typeof window !== "undefined") localStorage.setItem("theme", theme);

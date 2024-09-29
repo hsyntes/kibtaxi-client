@@ -1,6 +1,7 @@
 import {
   faAngleLeft,
   faAngleRight,
+  faBars,
   faCheck,
   faEarth,
   faGear,
@@ -80,23 +81,26 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between p-4">
+    <nav
+      id="app-navbar"
+      className="flex items-center justify-between sticky top-0 bg-white dark:bg-black shadow dark:shadow-dark p-4"
+    >
       <Link href={"/"}>
         <Image
           src={currentTheme === "dark" ? "/brand.light.png" : "/brand.dark.png"}
           width={272}
           height={71}
-          className="w-36"
+          className="w-32 lg:w-36"
           alt="Logo"
           priority
         />
       </Link>
       <ul>
-        <li className="relative">
+        <li className="relative hidden lg:block">
           <FontAwesomeIcon
             icon={faGear}
             size="lg"
-            className="cursor-pointer"
+            className="cursor-pointer hover:bg-dark hover:text-primary p-3 rounded-full transition-all"
             onClick={handleSettingsDropdown}
             ref={settingsDropdownRef}
           />
@@ -291,6 +295,9 @@ const Navbar = () => {
               </motion.div>
             </motion.div>
           </div>
+        </li>
+        <li className="block lg:hidden">
+          <FontAwesomeIcon icon={faBars} size="lg" />
         </li>
       </ul>
     </nav>
