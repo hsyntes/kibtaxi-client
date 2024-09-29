@@ -36,6 +36,10 @@ module.exports = {
         dark: "rgb(var(--color-border-dark))",
       },
 
+      boxShadowColor: {
+        dark: "rgb(var(--color-border-dark))",
+      },
+
       borderRadius: {
         DEFAULT: ".5rem",
       },
