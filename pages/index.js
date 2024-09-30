@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 
 export default function Home({ popular_taxis, taxis }) {
+  if (!popular_taxis || !taxis) return <p>Loading...</p>;
+
   return (
     <>
       <Head>
@@ -33,7 +35,7 @@ export default function Home({ popular_taxis, taxis }) {
             </h6>
           </section>
           <section>
-            <ul className="grid grid-cols-12 gap-6">
+            <ul className="grid grid-cols-12 gap-6 items-center">
               {taxis.map((taxi) => (
                 <li className="col-span-12 lg:col-span-6">
                   <CardTaxi taxi={taxi} key={taxi.taxi_placeId} />
