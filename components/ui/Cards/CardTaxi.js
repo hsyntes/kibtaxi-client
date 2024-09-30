@@ -8,21 +8,27 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import Avatar from "../Avatar";
 
 const CardTaxi = ({ taxi }) => {
   console.log("Taxi: ", taxi);
 
   let taxi_stars = [];
 
-  for (let i = 0; i < Math.round(Number(taxi.taxi_popularity.rating)); i++)
-    taxi_stars.push(
-      <FontAwesomeIcon icon={faStar} className="text-primary" size="xs" />
-    );
+  if (taxi.taxi_popularity)
+    for (let i = 0; i < Math.round(Number(taxi.taxi_popularity?.rating)); i++)
+      taxi_stars.push(
+        <FontAwesomeIcon icon={faStar} className="text-primary" size="xs" />
+      );
 
   console.log("taxi phone: ", taxi.taxi_phone);
 
   return (
-    <Card className={"grid grid-cols-12 gap-3 items-start justify-between"}>
+    <Card
+      className={
+        "grid grid-cols-12 gap-3 items-start justify-between cursor-pointer"
+      }
+    >
       <div className="col-span-2">
         <div
           style={{
@@ -32,12 +38,17 @@ const CardTaxi = ({ taxi }) => {
             overflow: "hidden",
           }}
         >
-          <Image
-            src={taxi.taxi_profile}
-            className="w-full h-full object-fit object-cover object-center"
-            width={100}
-            height={100}
-          />
+          {taxi.taxi_profile ? (
+            <Image
+              src={taxi.taxi_profile}
+              className="w-full h-full object-fit object-cover object-center"
+              width={100}
+              height={100}
+              alt="Taxi Profile Image"
+            />
+          ) : (
+            <Avatar />
+          )}
         </div>
       </div>
       <div className="col-span-9">
@@ -52,36 +63,38 @@ const CardTaxi = ({ taxi }) => {
         </section>
         <section className="flex items-center gap-1 mb-6">
           <span className="text-sm text-primary">
-            {taxi.taxi_popularity.rating}
+            {taxi.taxi_popularity?.rating}
           </span>
           <span className="flex items-center gap-1">
-            {taxi_stars.map((taxi_star) => taxi_star)}
+            {taxi_stars.length >= 0 && taxi_stars.map((taxi_star) => taxi_star)}
           </span>
           <span className="text-muted dark:text-muted-dark text-sm">
-            ({taxi.taxi_popularity.voted})
+            ({taxi.taxi_popularity?.voted})
           </span>
         </section>
-        <section className="flex items-center gap-3">
-          <a
-            href={`tel:${taxi.taxi_phone}`}
-            className="inline-block bg-blue-500 text-white hover:bg-blue-600 rounded-full py-2 px-4 transition-all"
-          >
-            <div className="flex items-center gap-1">
-              <FontAwesomeIcon icon={faPhone} size="sm" />
-              <span className="font-semibold text-xs">Phone</span>
-            </div>
-          </a>
-          <a
-            href={`https://wa.me/${taxi.taxi_phone.replace(/\s+/g, "")}`}
-            target="_blank"
-            className="inline-block bg-green-500 text-white hover:bg-green-600 rounded-full py-2 px-4 transition-all"
-          >
-            <div className="flex items-center gap-1">
-              <FontAwesomeIcon icon={faWhatsapp} size="sm" />
-              <span className="font-semibold text-xs">WhatsApp</span>
-            </div>
-          </a>
-        </section>
+        {taxi.taxi_phone && (
+          <section className="flex items-center gap-3">
+            <a
+              href={`tel:${taxi.taxi_phone}`}
+              className="inline-block bg-blue-500 text-white hover:bg-blue-600 rounded-full py-2 px-4 transition-all"
+            >
+              <div className="flex items-center gap-1">
+                <FontAwesomeIcon icon={faPhone} size="sm" />
+                <span className="font-semibold text-xs">Phone</span>
+              </div>
+            </a>
+            <a
+              href={`https://wa.me/${taxi.taxi_phone?.replace(/\s+/g, "")}`}
+              target="_blank"
+              className="inline-block bg-green-500 text-white hover:bg-green-600 rounded-full py-2 px-4 transition-all"
+            >
+              <div className="flex items-center gap-1">
+                <FontAwesomeIcon icon={faWhatsapp} size="sm" />
+                <span className="font-semibold text-xs">WhatsApp</span>
+              </div>
+            </a>
+          </section>
+        )}
       </div>
       <div className="col-span-1 text-center">
         <FontAwesomeIcon

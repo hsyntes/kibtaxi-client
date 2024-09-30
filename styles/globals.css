@@ -7,7 +7,7 @@
   --color-primary-darker: 230, 149, 0;
 
   --color-black: 3, 10, 14;
-  --color-dark: 8, 16, 23;
+  --color-dark: 28, 35, 38;
 
   --color-light: 245, 245, 245;
   --color-white: 255, 255, 255;
@@ -42,6 +42,7 @@ body {
 
 #app-main {
   width: 70%;
+  height: 92vh;
   overflow-y: scroll;
 }
 
@@ -62,7 +63,7 @@ body {
   }
 
   #app-main {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
