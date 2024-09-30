@@ -44,6 +44,7 @@ body {
   width: 70%;
   height: 92vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #app-aside::-webkit-scrollbar,
@@ -55,6 +56,10 @@ body {
 #app-aside::-webkit-scrollbar-thumb,
 #app-main::-webkit-scrollbar-thumb {
   background-color: rgb(var(--color-primary));
+}
+
+#popular-taxis {
+  scrollbar-width: none !important;
 }
 
 @media screen and (max-width: 992px) {
