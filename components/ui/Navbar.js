@@ -100,7 +100,7 @@ const Navbar = () => {
           <FontAwesomeIcon
             icon={faGear}
             size="lg"
-            className="cursor-pointer hover:bg-dark hover:text-primary p-3 rounded-full transition-all"
+            className="cursor-pointer hover:bg-light hover:dark:bg-dark hover:text-primary p-3 rounded-full transition-all"
             onClick={handleSettingsDropdown}
             ref={settingsDropdownRef}
           />
@@ -109,7 +109,7 @@ const Navbar = () => {
               display: settingsDropdownDisplay,
               width: "200px",
             }}
-            className="dropdown absolute top-full right-full bg-white dark:bg-black select-none transition-all"
+            className="dropdown absolute top-full right-full bg-white dark:bg-black select-none transition-all z-50"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}

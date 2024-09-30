@@ -19,7 +19,7 @@ export default function Home({ popular_taxis, taxis }) {
           Taksi Uygulaması
         </title>
       </Head>
-      <section id="app" className="flex items-start relative">
+      <section id="app" className="flex items-start">
         <Aside popular_taxis={popular_taxis} />
         <section id="app-main" className="p-4">
           <h1>KibTAXI, Kuzey Kibris'in Taxi Uygulaması</h1>
@@ -38,7 +38,7 @@ export async function getServerSideProps() {
   const [lat, long] = dataIP.loc.split(",");
 
   const dataTaxis = await HttpRequest.get(
-    `taxis?lat=${lat}&long=${long}&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
+    `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
   );
 
   const { popular_taxis, taxis } = dataTaxis.data;
