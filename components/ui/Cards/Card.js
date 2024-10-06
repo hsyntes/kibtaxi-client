@@ -1,29 +1,10 @@
-const Card = ({ className, children }) => (
+const Card = ({ className, children, onClick }) => (
   <div
     className={`card bg-white dark:bg-dark hover:!bg-light hover:dark:!bg-black border dark:border-dark rounded ${className} p-4 transition-all`}
+    onClick={onClick}
   >
     {children}
   </div>
 );
-
-// const CardHeader = ({ className, children }) => (
-//   <div className={`card-header flex items-start justify-between ${className}`}>
-//     {children}
-//   </div>
-// );
-
-// const CardBody = ({ className, children }) => (
-//   <div className={`card-body ${className}`}>{children}</div>
-// );
-
-// const CardFooter = ({ className, children }) => (
-//   <div className={`card-footer flex items-center justify-between ${className}`}>
-//     {children}
-//   </div>
-// );
-
-// Card.Header = CardHeader;
-// Card.Body = CardBody;
-// Card.Footer = CardFooter;
 
 export default Card;

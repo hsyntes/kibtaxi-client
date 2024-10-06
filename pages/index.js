@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 
 export default function Home({ popular_taxis, taxis }) {
+  console.log("Hüseyin Ateş - Software Engineer | MERN & Flutter Developer");
+
   return (
     <>
       <Head>
@@ -79,8 +81,14 @@ export async function getServerSideProps() {
   const dataIP = await responseIP.json();
   const [lat, long] = dataIP.loc.split(",");
 
+  // const dataTaxis = await HttpRequest.get(
+  //   `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
+  // );
+
   const dataTaxis = await HttpRequest.get(
-    `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
+    `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
+      process.env.NEXT_PUBLIC_API_KEY
+    }`
   );
 
   const { popular_taxis, taxis } = dataTaxis.data;

@@ -62,6 +62,15 @@ body {
   scrollbar-width: none !important;
 }
 
+.modal-body::-webkit-scrollbar {
+  width: 3px;
+  background-color: none;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-primary));
+}
+
 @media screen and (max-width: 992px) {
   #app-aside {
     display: none;

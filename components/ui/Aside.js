@@ -16,7 +16,9 @@ const Aside = ({ popular_taxis }) => {
       <section>
         <ul className="space-y-6">
           {popular_taxis.map((popular_taxi) => (
-            <CardTaxi taxi={popular_taxi} key={popular_taxi.taxi_placeId} />
+            <li key={popular_taxi._id}>
+              <CardTaxi taxi={popular_taxi} />
+            </li>
           ))}
         </ul>
       </section>
