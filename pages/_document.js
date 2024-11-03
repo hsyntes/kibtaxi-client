@@ -8,6 +8,7 @@ export default function Document() {
         <Main />
         <NextScript />
         <div id="modal-backdrop"></div>
+        <div id="bottomsheet-backdrop"></div>
       </body>
     </Html>
   );

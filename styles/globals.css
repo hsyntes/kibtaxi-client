@@ -7,7 +7,7 @@
   --color-primary-darker: 230, 149, 0;
 
   --color-black: 3, 10, 14;
-  --color-dark: 28, 35, 38;
+  --color-dark: 17, 21, 23;
 
   --color-light: 245, 245, 245;
   --color-white: 255, 255, 255;
@@ -48,13 +48,15 @@ body {
 }
 
 #app-aside::-webkit-scrollbar,
-#app-main::-webkit-scrollbar {
+#app-main::-webkit-scrollbar,
+#review-taxibottomsheet::-webkit-scrollbar {
   width: 3px;
   background-color: none;
 }
 
 #app-aside::-webkit-scrollbar-thumb,
-#app-main::-webkit-scrollbar-thumb {
+#app-main::-webkit-scrollbar-thumb,
+#review-taxibottomsheet::-webkit-scrollbar-thumb {
   background-color: rgb(var(--color-primary));
 }
 
@@ -93,10 +95,10 @@ body {
 
 @media screen and (min-width: 1600px) {
   #app-aside {
-    width: 22%;
+    width: 25%;
   }
 
   #app-main {
-    width: 78%;
+    width: 75%;
   }
 }

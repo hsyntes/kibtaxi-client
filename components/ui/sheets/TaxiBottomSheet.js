@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Modal from "./Modal";
+import BottomSheet from "./BottomSheet";
 import Avatar from "../Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,7 @@ import {
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Button from "../Button";
 
-const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
+const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
   let taxi_stars = [];
 
   if (taxi?.taxi_popularity)
@@ -26,13 +26,13 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
       );
 
   return (
-    <Modal show={show} handleCloseModal={handleCloseModal}>
-      <Modal.Header className={"grid grid-cols-12"}>
-        <section className="col-span-2">
+    <BottomSheet show={show} handleCloseBottomSheet={handleCloseBottomSheet}>
+      <div className="grid grid-cols-12">
+        <div className="col-span-3">
           <div
             style={{
-              width: 96,
-              height: 96,
+              width: 64,
+              height: 64,
               borderRadius: 360,
               overflow: "hidden",
             }}
@@ -41,27 +41,27 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
               <Image
                 src={taxi?.taxi_profile}
                 className="w-full h-full object-fit object-cover object-center"
-                width={96}
-                height={96}
+                width={64}
+                height={64}
                 alt="Taxi Profile Image"
               />
             ) : (
               <Avatar />
             )}
           </div>
-        </section>
-        <section className="col-span-9">
-          <section className="mb-3">
+        </div>
+        <div className="col-span-8">
+          <div className="mb-1">
             <h1 className="font-semibold text-xl line-clamp-1">
               {taxi?.taxi_name}
             </h1>
-            <p className="flex items-center gap-1 text-muted dark:text-muted-dark">
+            <p className="flex items-center gap-1 text-sm text-muted dark:text-muted-dark">
               <FontAwesomeIcon icon={faLocationDot} />
               <span className="line-clamp-1">{taxi?.taxi_address}</span>
             </p>
-          </section>
+          </div>
           {taxi?.taxi_popularity ? (
-            <div className="flex items-center gap-1 mb-6">
+            <div className="flex items-center text-sm gap-1 mb-6">
               <span className="text-primary">
                 {taxi?.taxi_popularity?.rating}
               </span>
@@ -99,76 +99,67 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
               </a>
             </div>
           )}
-        </section>
-        <section className="col-span-1 text-end">
+        </div>
+        <div className="col-span-1">
           <FontAwesomeIcon
             icon={faBookmark}
             className="text-muted dark:text-muted-dark cursor-pointer hover:text-dark hover:dark:text-white transition-all"
             size="lg"
           />
-        </section>
-      </Modal.Header>
+        </div>
+      </div>
       <hr className="border-none bg-border dark:bg-border-dark h-[1px] my-6" />
-      <Modal.Body classNmae={"max-h-[400px] overflow-y-scroll mb-6"}>
-        <section className="mb-6">
-          <ul
-            className={`flex items-center ${
-              taxi?.taxi_photos.length >= 4 && "justify-between"
-            } flex-wrap gap-4`}
-          >
-            {taxi?.taxi_photos?.slice(0, 4)?.map((taxi_photo) => (
-              <li key={taxi?._id}>
+      <div className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
+        {taxi?.taxi_photos &&
+          taxi?.taxi_photos.slice(0, 4).map((taxi_photo) => (
+            <div className="min-w-48 max-h-[124px] snap-start snap-always">
+              <Image
+                src={taxi_photo}
+                width={192}
+                height={192}
+                className="w-full h-full object-fit object-cover object-center rounded"
+                alt={`${taxi?.taxi_name}'s Photos`}
+              />
+            </div>
+          ))}
+      </div>
+      <div
+        id="review-taxibottomsheet"
+        className="max-h-[170px] overflow-y-scroll"
+      >
+        <ul className="space-y-6">
+          {taxi?.taxi_reviews?.map((taxi_review) => (
+            <li className="flex items-start gap-3" key={taxi?._id}>
+              <section>
                 <div
-                  className="rounded"
-                  style={{ width: 148, height: 148, overflow: "hidden" }}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 360,
+                    overflow: "hidden",
+                  }}
                 >
                   <Image
-                    src={taxi_photo}
-                    width={148}
-                    height={148}
-                    className="w-full h-full object-fit object-cover object-center"
-                    alt={`${taxi?.taxi_name}'s Photos`}
+                    src={taxi_review.reviewer_photo}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover object-center"
+                    alt={`${taxi?.taxi_name}'s reviewer photo`}
                   />
                 </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section>
-          <ul className="space-y-6">
-            {taxi?.taxi_reviews?.map((taxi_review) => (
-              <li className="flex items-start gap-3" key={taxi?._id}>
-                <section>
-                  <div
-                    style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: 360,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Image
-                      src={taxi_review.reviewer_photo}
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover object-center"
-                      alt={`${taxi?.taxi_name}'s reviewer photo`}
-                    />
-                  </div>
-                </section>
-                <section>
-                  <h6 className="font-semibold">{taxi_review.reviewer_name}</h6>
-                  <p className="text-sm text-muted dark:text-muted-dark">
-                    {taxi_review.reviewer_review?.text}
-                  </p>
-                </section>
-                <section></section>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </Modal.Body>
-      <Modal.Footer className={"grid grid-cols-12"}>
+              </section>
+              <section>
+                <h6 className="font-semibold">{taxi_review.reviewer_name}</h6>
+                <p className="text-sm text-muted dark:text-muted-dark">
+                  {taxi_review.reviewer_review?.text}
+                </p>
+              </section>
+              <section></section>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="grid grid-cols-12 items-center mt-auto py-6">
         <div className="col-span-11">
           <Button type={"button"} variant={"blue"} className={"w-full !py-3"}>
             View Full Profile
@@ -184,9 +175,9 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
             />
           </a>
         </div>
-      </Modal.Footer>
-    </Modal>
+      </div>
+    </BottomSheet>
   );
 };
 
-export default ModalTaxi;
+export default TaxiBottomSheet;

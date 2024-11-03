@@ -1,12 +1,43 @@
 import Aside from "@/components/ui/Aside";
 import CardTaxi from "@/components/ui/Cards/CardTaxi";
+import ModalTaxi from "@/components/ui/modals/ModalTaxi";
+import TaxiBottomSheet from "@/components/ui/sheets/TaxiBottomSheet";
 import HttpRequest from "@/utils/HttpRequest";
 import { faLocation, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Home({ popular_taxis, taxis }) {
-  console.log("Hüseyin Ateş - Software Engineer | MERN & Flutter Developer");
+  const [selectedTaxi, setSelectedTaxi] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [bottomSheet, setBottomSheet] = useState(false);
+
+  const handleOpenModal = () => setModal(true);
+  const handleCloseModal = () => setModal(false);
+
+  const handleOpenBottomSheet = () => setBottomSheet(true);
+  const handleCloseBottomSheet = () => setBottomSheet(false);
+
+  function handleSelectTaxi(taxi) {
+    setSelectedTaxi(taxi);
+
+    if (typeof window !== "undefined" && window.innerWidth >= 992)
+      handleOpenModal();
+    else if (typeof window !== "undefined" && window.innerWidth < 992)
+      handleOpenBottomSheet();
+  }
+
+  function handleUnselectTaxi() {
+    const identifier = setTimeout(function () {
+      setSelectedTaxi(null);
+    }, 200);
+
+    handleCloseModal();
+    handleCloseBottomSheet();
+
+    return () => clearTimeout(identifier);
+  }
 
   return (
     <>
@@ -42,9 +73,12 @@ export default function Home({ popular_taxis, taxis }) {
                 {popular_taxis.map((popular_taxi) => (
                   <li
                     className="min-w-[90%] snap-start snap-always"
-                    key={popular_taxi.taxi_placeId}
+                    key={popular_taxi._id}
                   >
-                    <CardTaxi taxi={popular_taxi} />
+                    <CardTaxi
+                      taxi={popular_taxi}
+                      handleSelectTaxi={handleSelectTaxi}
+                    />
                   </li>
                 ))}
               </ul>
@@ -60,8 +94,8 @@ export default function Home({ popular_taxis, taxis }) {
             <section>
               <ul className="grid grid-cols-12 gap-6 items-center">
                 {taxis.map((taxi) => (
-                  <li className="col-span-12 lg:col-span-6">
-                    <CardTaxi taxi={taxi} key={taxi.taxi_placeId} />
+                  <li className="col-span-12 lg:col-span-6" key={taxi._id}>
+                    <CardTaxi taxi={taxi} handleSelectTaxi={handleSelectTaxi} />
                   </li>
                 ))}
               </ul>
@@ -69,6 +103,16 @@ export default function Home({ popular_taxis, taxis }) {
           </section>
         </section>
       </section>
+      <ModalTaxi
+        show={modal}
+        handleCloseModal={handleUnselectTaxi}
+        taxi={selectedTaxi}
+      />
+      <TaxiBottomSheet
+        show={bottomSheet}
+        handleCloseBottomSheet={handleUnselectTaxi}
+        taxi={selectedTaxi}
+      />
     </>
   );
 }
