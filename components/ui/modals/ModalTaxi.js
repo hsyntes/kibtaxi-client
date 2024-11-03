@@ -11,9 +11,14 @@ import {
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Button from "../Button";
 import { v4 } from "uuid";
+import { useRouter } from "next/router";
 
 const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
+  const router = useRouter();
+
   let taxi_stars = [];
+
+  const handleNavigate = (path) => router.push(`/${taxi._id}`);
 
   if (taxi?.taxi_popularity)
     for (let i = 0; i < Math.round(Number(taxi?.taxi_popularity?.rating)); i++)
@@ -29,7 +34,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
   return (
     <Modal show={show} handleCloseModal={handleCloseModal}>
       <Modal.Header className={"grid grid-cols-12"}>
-        <section className="col-span-2">
+        <section className="col-span-2" onClick={handleNavigate}>
           <div
             style={{
               width: 96,
