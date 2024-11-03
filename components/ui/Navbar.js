@@ -16,8 +16,11 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { themeSliceActions } from "@/store/theme/theme.slice";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter();
+
   const themeState = useSelector((state) => state.theme);
   const dispatch = useDispatch();
 
@@ -305,7 +308,11 @@ const Navbar = () => {
             </section>
           </li>
           <li className="block lg:hidden">
-            <FontAwesomeIcon icon={faBars} size="lg" />
+            <FontAwesomeIcon
+              icon={faBars}
+              size="lg"
+              onClick={() => router.push("/settings")}
+            />
           </li>
         </ul>
       </section>
