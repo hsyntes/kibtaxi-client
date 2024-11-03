@@ -7,7 +7,7 @@ const Button = ({ type, variant, className, children }) => {
       break;
 
     case "blue":
-      classes += "bg-blue-600 hover:bg-blue-700";
+      classes += "bg-blue-600 hover:bg-blue-700 text-white";
       break;
   }
 
