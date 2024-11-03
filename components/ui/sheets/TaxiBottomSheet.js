@@ -28,8 +28,8 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
 
   return (
     <BottomSheet show={show} handleCloseBottomSheet={handleCloseBottomSheet}>
-      <div className="grid grid-cols-12">
-        <div className="col-span-3">
+      <section className="grid grid-cols-12">
+        <section className="col-span-3">
           <div
             style={{
               width: 64,
@@ -44,15 +44,15 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
                 className="w-full h-full object-fit object-cover object-center"
                 width={64}
                 height={64}
-                alt="Taxi Profile Image"
+                alt={`${taxi.taxi_name} Profil Image`}
               />
             ) : (
               <Avatar />
             )}
           </div>
-        </div>
-        <div className="col-span-8">
-          <div className="mb-1">
+        </section>
+        <section className="col-span-8">
+          <section className="mb-1">
             <h1 className="font-semibold text-xl line-clamp-1">
               {taxi?.taxi_name}
             </h1>
@@ -60,7 +60,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
               <FontAwesomeIcon icon={faLocationDot} />
               <span className="line-clamp-1">{taxi?.taxi_address}</span>
             </p>
-          </div>
+          </section>
           {taxi?.taxi_popularity ? (
             <div className="flex items-center text-sm gap-1 mb-6">
               <span className="text-primary">
@@ -78,7 +78,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
             <p className="text-muted dark:text-muted-dark">Not yet rated.</p>
           )}
           {taxi?.taxi_phone && (
-            <div className="flex items-center gap-3">
+            <section className="flex items-center gap-3">
               <a
                 href={`tel:${taxi?.taxi_phone}`}
                 className="inline-block bg-blue-600 text-white hover:bg-blue-700 rounded-full py-2 px-4 transition-all"
@@ -98,9 +98,9 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
                   <span className="font-semibold text-sm">WhatsApp</span>
                 </div>
               </a>
-            </div>
+            </section>
           )}
-        </div>
+        </section>
         <div className="col-span-1">
           <FontAwesomeIcon
             icon={faBookmark}
@@ -108,13 +108,13 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
             size="lg"
           />
         </div>
-      </div>
+      </section>
       <hr className="border-none bg-border dark:bg-border-dark h-[1px] my-6" />
-      <div
+      <section
         id="review-taxibottomsheet"
         className="max-h-[300px] overflow-y-scroll"
       >
-        <div className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
+        <section className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
           {taxi?.taxi_photos &&
             taxi?.taxi_photos.slice(0, 4).map((taxi_photo) => (
               <div
@@ -130,46 +130,47 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
                 />
               </div>
             ))}
-        </div>
-        <ul className="space-y-6">
-          {taxi?.taxi_reviews?.map((taxi_review) => (
-            <li className="flex items-start gap-3" key={v4()}>
-              <section>
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: 360,
-                    overflow: "hidden",
-                  }}
-                >
-                  <Image
-                    src={taxi_review.reviewer_photo}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover object-center"
-                    alt={`${taxi?.taxi_name}'s reviewer photo`}
-                  />
-                </div>
-              </section>
-              <section>
-                <h6 className="font-semibold">{taxi_review.reviewer_name}</h6>
-                <p className="text-sm text-muted dark:text-muted-dark">
-                  {taxi_review.reviewer_review?.text}
-                </p>
-              </section>
-              <section></section>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="grid grid-cols-12 items-center mt-auto py-6">
-        <div className="col-span-11">
+        </section>
+        <section>
+          <ul className="space-y-6">
+            {taxi?.taxi_reviews?.map((taxi_review) => (
+              <li className="flex items-start gap-3" key={v4()}>
+                <section>
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: 360,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={taxi_review.reviewer_photo}
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover object-center"
+                      alt={`${taxi?.taxi_name}'s reviewer photo`}
+                    />
+                  </div>
+                </section>
+                <section>
+                  <h6 className="font-semibold">{taxi_review.reviewer_name}</h6>
+                  <p className="text-sm text-muted dark:text-muted-dark">
+                    {taxi_review.reviewer_review?.text}
+                  </p>
+                </section>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </section>
+      <section className="grid grid-cols-12 items-center mt-auto py-6">
+        <section className="col-span-11">
           <Button type={"button"} variant={"blue"} className={"w-full !py-3"}>
             View Full Profile
           </Button>
-        </div>
-        <div className="col-span-1 flex justify-end">
+        </section>
+        <section className="col-span-1 flex justify-end">
           <a href={taxi?.taxi_googleMaps} target="_blank">
             <Image
               src={"/icons/google_maps.png"}
@@ -178,8 +179,8 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
               alt={`${taxi?.taxi_name} Google Maps`}
             />
           </a>
-        </div>
-      </div>
+        </section>
+      </section>
     </BottomSheet>
   );
 };

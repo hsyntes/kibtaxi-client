@@ -76,32 +76,32 @@ const CardTaxi = ({ taxi, handleSelectTaxi }) => {
             </span>
           </div>
         ) : (
-          <p className="text-xs text-muted dark:text-muted-dark">
+          <span className="text-xs text-muted dark:text-muted-dark">
             Not yet rated.
-          </p>
+          </span>
         )}
         {taxi.taxi_phone && (
-          <div className="flex items-center gap-3">
+          <section className="flex items-center gap-3">
             <a
               href={`tel:${taxi.taxi_phone}`}
               className="inline-block bg-blue-600 text-white hover:bg-blue-700 rounded-full py-2 px-4 transition-all"
             >
-              <div className="flex items-center gap-1">
+              <section className="flex items-center gap-1">
                 <FontAwesomeIcon icon={faPhone} size="sm" />
                 <span className="font-semibold text-xs">Phone</span>
-              </div>
+              </section>
             </a>
             <a
               href={`https://wa.me/${taxi.taxi_phone?.replace(/\s+/g, "")}`}
               target="_blank"
               className="inline-block bg-green-600 text-white hover:bg-green-700 rounded-full py-2 px-4 transition-all"
             >
-              <div className="flex items-center gap-1">
+              <section className="flex items-center gap-1">
                 <FontAwesomeIcon icon={faWhatsapp} size="sm" />
                 <span className="font-semibold text-xs">WhatsApp</span>
-              </div>
+              </section>
             </a>
-          </div>
+          </section>
         )}
       </section>
       <section className="col-span-1 text-center">

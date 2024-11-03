@@ -60,26 +60,25 @@ const BottomSheet = ({
   if (!isMounted) return null;
 
   return createPortal(
-    <div
+    <section
       id="bottomsheet-overlay"
       className="fixed w-screen h-screen top-0 left-0 flex items-center justify-center bg-muted-dark dark:bg-muted select-none z-50"
       style={{ display }}
       ref={bottomsheetOverlayRef}
     >
-      <motion.div
+      <motion.section
         animate={{ translateY: show ? "0%" : "100%" }}
         transition={{ ease: "easeOut", duration: 0.1 }}
         className="absolute bottom-0 w-full flex flex-col bg-white dark:bg-dark rounded-t-3xl"
-        // style={{ height: `${75}vh` }}
       >
         <div className="flex items-center justify-center my-4 flex-[0.05]">
           <div className="w-1/4 bg-muted dark:bg-muted-dark bg-none rounded-full p-[2.5px]" />
         </div>
-        <div className={`flex flex-[0.95] flex-col px-6 ${className}`}>
+        <section className={`flex flex-[0.95] flex-col px-6 ${className}`}>
           {children}
-        </div>
-      </motion.div>
-    </div>,
+        </section>
+      </motion.section>
+    </section>,
     document.getElementById("bottomsheet-backdrop")
   );
 };
