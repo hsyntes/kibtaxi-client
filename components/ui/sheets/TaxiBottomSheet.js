@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Button from "../Button";
+import { v4 } from "uuid";
 
 const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
   let taxi_stars = [];
@@ -21,7 +22,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
           icon={faStar}
           className="text-primary"
           size="xs"
-          key={`${taxi?.taxi_name} rating`}
+          key={v4()}
         />
       );
 
@@ -109,27 +110,30 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
         </div>
       </div>
       <hr className="border-none bg-border dark:bg-border-dark h-[1px] my-6" />
-      <div className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
-        {taxi?.taxi_photos &&
-          taxi?.taxi_photos.slice(0, 4).map((taxi_photo) => (
-            <div className="min-w-48 max-h-[124px] snap-start snap-always">
-              <Image
-                src={taxi_photo}
-                width={192}
-                height={192}
-                className="w-full h-full object-fit object-cover object-center rounded"
-                alt={`${taxi?.taxi_name}'s Photos`}
-              />
-            </div>
-          ))}
-      </div>
       <div
         id="review-taxibottomsheet"
-        className="max-h-[170px] overflow-y-scroll"
+        className="max-h-[300px] overflow-y-scroll"
       >
+        <div className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
+          {taxi?.taxi_photos &&
+            taxi?.taxi_photos.slice(0, 4).map((taxi_photo) => (
+              <div
+                className="min-w-48 max-h-[124px] snap-start snap-always"
+                key={v4()}
+              >
+                <Image
+                  src={taxi_photo}
+                  width={192}
+                  height={192}
+                  className="w-full h-full object-fit object-cover object-center rounded"
+                  alt={`${taxi?.taxi_name}'s Photos`}
+                />
+              </div>
+            ))}
+        </div>
         <ul className="space-y-6">
           {taxi?.taxi_reviews?.map((taxi_review) => (
-            <li className="flex items-start gap-3" key={taxi?._id}>
+            <li className="flex items-start gap-3" key={v4()}>
               <section>
                 <div
                   style={{

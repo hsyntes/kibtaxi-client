@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Button from "../Button";
+import { v4 } from "uuid";
 
 const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
   let taxi_stars = [];
@@ -21,7 +22,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
           icon={faStar}
           className="text-primary"
           size="xs"
-          key={`${taxi?.taxi_name} rating`}
+          key={v4()}
         />
       );
 
@@ -117,7 +118,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
             } flex-wrap gap-4`}
           >
             {taxi?.taxi_photos?.slice(0, 4)?.map((taxi_photo) => (
-              <li key={taxi?._id}>
+              <li key={v4()}>
                 <div
                   className="rounded"
                   style={{ width: 148, height: 148, overflow: "hidden" }}
@@ -137,7 +138,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
         <section>
           <ul className="space-y-6">
             {taxi?.taxi_reviews?.map((taxi_review) => (
-              <li className="flex items-start gap-3" key={taxi?._id}>
+              <li className="flex items-start gap-3" key={v4()}>
                 <section>
                   <div
                     style={{
