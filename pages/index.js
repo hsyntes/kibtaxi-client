@@ -1,15 +1,20 @@
 import Aside from "@/components/ui/Aside";
+import Button from "@/components/ui/Button";
 import CardTaxi from "@/components/ui/Cards/CardTaxi";
 import ModalTaxi from "@/components/ui/modals/ModalTaxi";
 import TaxiBottomSheet from "@/components/ui/sheets/TaxiBottomSheet";
 import HttpRequest from "@/utils/HttpRequest";
-import { faLocation, faRocket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faLocation,
+  faRocket,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import { useState } from "react";
 import { v4 } from "uuid";
 
-export default function Home({ popular_taxis, taxis }) {
+export default function Home({ popular_taxis, taxis, city }) {
   const [selectedTaxi, setSelectedTaxi] = useState(null);
   const [modal, setModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
@@ -63,11 +68,19 @@ export default function Home({ popular_taxis, taxis }) {
         />
         <section id="app-main" className="p-4">
           <section className="lg:hidden mb-4">
-            <section className="mb-4">
+            <section className="flex items-center justify-between mb-4">
               <h6 className="flex items-center gap-2 font-semibold">
                 <FontAwesomeIcon icon={faRocket} className="text-primary" />
                 <span>Most popular, Famagusta</span>
               </h6>
+              <Button
+                type={"button"}
+                // variant={"primary"}
+                className={"flex items-center gap-2 text-primary !rounded"}
+              >
+                <span>{city}</span>
+                <FontAwesomeIcon icon={faAngleDown} />
+              </Button>
             </section>
             <section>
               <ul
@@ -130,6 +143,14 @@ export async function getServerSideProps() {
   //   `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
   // );
 
+  const responseCity = await fetch(
+    `https://us1.locationiq.com/v1/reverse?key=${
+      process.env.NEXT_PUBLIC_LOCATIONIQ_ACCESS_TOKEN
+    }&lat=${35.1922456}&lon=${33.3562027}&format=json&`
+  );
+
+  const dataCity = await responseCity.json();
+
   const dataTaxis = await HttpRequest.get(
     `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
       process.env.NEXT_PUBLIC_API_KEY
@@ -137,11 +158,13 @@ export async function getServerSideProps() {
   );
 
   const { popular_taxis, taxis } = dataTaxis.data;
+  const { address } = dataCity;
 
   return {
     props: {
       popular_taxis,
       taxis,
+      city: address.city || address.state_district,
     },
   };
 }

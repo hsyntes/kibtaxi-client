@@ -19,7 +19,7 @@ const SettingsPage = () => {
         >
           <section className="flex items-center gap-2">
             <FontAwesomeIcon icon={faMoon} />
-            <span>Theme</span>
+            <span className="text-lg">Theme</span>
           </section>
           <FontAwesomeIcon icon={faAngleRight} />
         </li>
@@ -34,7 +34,7 @@ const SettingsPage = () => {
         >
           <section className="flex items-center gap-2">
             <FontAwesomeIcon icon={faEarth} />
-            <span>Language</span>
+            <span className="text-lg">Language</span>
           </section>
           <FontAwesomeIcon icon={faAngleRight} />
         </li>

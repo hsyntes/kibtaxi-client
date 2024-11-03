@@ -30,11 +30,10 @@ const ThemeSettingsPage = () => {
         >
           <section className="dropdown flex items-center gap-2">
             <FontAwesomeIcon icon={faSun} className="dropdown" />
-            <span>Light</span>
+            <span className="text-lg">Light</span>
           </section>
           <FontAwesomeIcon
             icon={faCheck}
-            size="sm"
             style={{
               display: currentTheme !== "light" && "none",
             }}
@@ -47,11 +46,10 @@ const ThemeSettingsPage = () => {
         >
           <section className="dropdown flex items-center gap-2">
             <FontAwesomeIcon icon={faMoon} className="dropdown" />
-            <span>Dark</span>
+            <span className="text-lg">Dark</span>
           </section>
           <FontAwesomeIcon
             icon={faCheck}
-            size="sm"
             style={{ display: currentTheme !== "dark" && "none" }}
             className="dropdown text-primary"
           />
