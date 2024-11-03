@@ -43,8 +43,8 @@ const CardTaxi = ({ taxi, handleSelectTaxi }) => {
             <Image
               src={taxi.taxi_profile}
               className="w-full h-full object-fit object-cover object-center"
-              width={48}
-              height={48}
+              width={256}
+              height={256}
               alt="Taxi Profile Image"
             />
           ) : (
