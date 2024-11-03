@@ -56,13 +56,13 @@ const Modal = ({ show, handleCloseModal, className, children }) => {
   if (!isMounted) return null;
 
   return createPortal(
-    <div
+    <section
       id="modal-overlay"
       className="fixed w-screen h-screen top-0 left-0 flex items-center justify-center bg-muted-dark dark:bg-muted select-none z-50"
       style={{ display }}
       ref={modalOverlayRef}
     >
-      <motion.div
+      <motion.section
         initial={{ scale: 1.1 }}
         animate={{ scale: show ? [1.1, 1] : [1, 0.9] }}
         className={`modal absolute top-1/2 left-1/2 w-3/4 xl:w-1/2 bg-white dark:bg-dark rounded-lg border dark:border-dark shadow py-6 px-8 z-50 ${className}`}
@@ -73,8 +73,8 @@ const Modal = ({ show, handleCloseModal, className, children }) => {
         }}
       >
         {children}
-      </motion.div>
-    </div>,
+      </motion.section>
+    </section>,
     document.getElementById("modal-backdrop")
   );
 };

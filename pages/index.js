@@ -45,7 +45,7 @@ export default function Home({ popular_taxis, taxis }) {
       <Head>
         <meta
           name="description"
-          content="Kibtaxi | Kıbrıs'ın Taksi Uygulaması"
+          content="Kibtaxi | KKTC Kıbrıs'ın Taksi Uygulaması"
         />
         <meta
           name="keywords"
