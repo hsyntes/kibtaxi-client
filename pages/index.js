@@ -75,10 +75,9 @@ export default function Home({ popular_taxis, taxis, city }) {
               </h6>
               <Button
                 type={"button"}
-                // variant={"primary"}
                 className={"flex items-center gap-2 text-primary !rounded"}
               >
-                <span>{city}</span>
+                <span>{city?.slice(0, 10)}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </Button>
             </section>
@@ -99,11 +98,18 @@ export default function Home({ popular_taxis, taxis, city }) {
             </section>
           </section>
           <section>
-            <section className="mb-4">
+            <section className="flex items-center justify-between mb-4">
               <h6 className="flex items-center gap-2 font-semibold mb-4">
                 <FontAwesomeIcon icon={faLocation} className="text-primary" />
                 <span>Other taxis around you</span>
               </h6>
+              <Button
+                type={"button"}
+                className={"flex items-center gap-2 text-primary !rounded"}
+              >
+                <span>{city?.slice(0, 10)}</span>
+                <FontAwesomeIcon icon={faAngleDown} />
+              </Button>
             </section>
             <section>
               <ul className="grid grid-cols-12 gap-6 items-center">
