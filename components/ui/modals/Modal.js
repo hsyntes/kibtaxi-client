@@ -83,8 +83,10 @@ const ModalHeader = ({ className, children }) => (
   <div className={`modal-header ${className}`}>{children}</div>
 );
 
-const ModalBody = ({ classNmae, children }) => (
-  <div className={`modal-body ${classNmae}`}>{children}</div>
+const ModalBody = ({ classNmae, onClick, children }) => (
+  <div className={`modal-body ${classNmae}`} onClick={onClick}>
+    {children}
+  </div>
 );
 
 const ModalFooter = ({ className, children }) => (

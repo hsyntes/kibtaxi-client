@@ -50,15 +50,15 @@ export default function Home({ popular_taxis, taxis, city }) {
       <Head>
         <meta
           name="description"
-          content="Kibtaxi | KKTC Kıbrıs'ın Taksi Uygulaması"
+          content="Kibtaxi KKTC ve Kuzey Kıbrıs'ın Taksi Uygulaması | Kıbrıs Taxi | Kıbrıs taksi"
         />
         <meta
           name="keywords"
-          content="kibtaxi, kıbrıs taksi, mağusa taksi, ercan taksi, lefkoşa taksi, kktc taksi, kktc taxi"
+          content="kibtaxi, kktc taksi, kıbrıs taksi, kktc taxi, trnc taxi, trnc taksi, north cyprus taxi, north cyprus taksi, mağusa taksi, famagusta taxi, magosa taksi, girne taksi, kyrenia taksi, kyrenia taxi, nicosia taksi, nicosia taxi, ercan taksi, lefkoşa taksi"
         />
         <title>
-          Kıbtaxi | Kıbrıs Taksi | KKTC Taksi | Kıbrıs'ın ve Kuzey Kıbrıs'ın
-          Taksi Uygulaması
+          Kibtaxi | Kıbrıs Taksi | KKTC Taksi | Kıbrıs'ın ve Kuzey Kıbrıs'ın
+          KKTC Taksi Uygulaması
         </title>
       </Head>
       <section id="app" className="flex items-start">
@@ -68,7 +68,7 @@ export default function Home({ popular_taxis, taxis, city }) {
         />
         <section id="app-main" className="p-4">
           <section className="lg:hidden mb-4">
-            <section className="flex items-center justify-between mb-4">
+            <section className="flex items-center justify-between mb-1">
               <h6 className="flex items-center gap-2 font-semibold">
                 <FontAwesomeIcon icon={faRocket} className="text-primary" />
                 <span>Most popular, Famagusta</span>
@@ -98,14 +98,16 @@ export default function Home({ popular_taxis, taxis, city }) {
             </section>
           </section>
           <section>
-            <section className="flex items-center justify-between mb-4">
-              <h6 className="flex items-center gap-2 font-semibold mb-4">
+            <section className="flex items-center justify-between mb-1">
+              <h6 className="flex items-center gap-2 font-semibold">
                 <FontAwesomeIcon icon={faLocation} className="text-primary" />
                 <span>Other taxis around you</span>
               </h6>
               <Button
                 type={"button"}
-                className={"flex items-center gap-2 text-primary !rounded"}
+                className={
+                  "hidden lg:flex items-center gap-2 text-primary !rounded"
+                }
               >
                 <span>{city?.slice(0, 10)}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
@@ -142,26 +144,26 @@ export async function getServerSideProps() {
     `https://ipinfo.io/json?token=${process.env.NEXT_PUBLIC_IPINFO_IO_TOKEN}`
   );
 
-  const dataIP = await responseIP.json();
-  const [lat, long] = dataIP.loc.split(",");
-
-  // const dataTaxis = await HttpRequest.get(
-  //   `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
-  // );
-
   const responseCity = await fetch(
     `https://us1.locationiq.com/v1/reverse?key=${
       process.env.NEXT_PUBLIC_LOCATIONIQ_ACCESS_TOKEN
     }&lat=${35.1922456}&lon=${33.3562027}&format=json&`
   );
 
-  const dataCity = await responseCity.json();
+  const dataIP = await responseIP.json();
+  const [lat, long] = dataIP.loc.split(",");
 
   const dataTaxis = await HttpRequest.get(
-    `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
-      process.env.NEXT_PUBLIC_API_KEY
-    }`
+    `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
   );
+
+  // const dataTaxis = await HttpRequest.get(
+  //   `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
+  //     process.env.NEXT_PUBLIC_API_KEY
+  //   }`
+  // );
+
+  const dataCity = await responseCity.json();
 
   const { popular_taxis, taxis } = dataTaxis.data;
   const { address } = dataCity;
