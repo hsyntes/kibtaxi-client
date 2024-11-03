@@ -69,7 +69,7 @@ const BottomSheet = ({
       <motion.section
         animate={{ translateY: show ? "0%" : "100%" }}
         transition={{ ease: "easeOut", duration: 0.1 }}
-        className="absolute bottom-0 w-full flex flex-col bg-white dark:bg-dark rounded-t-3xl"
+        className="absolute bottom-0 w-full flex flex-col bg-white dark:bg-dark rounded-t-3xl border dark:border-none"
       >
         <div className="flex items-center justify-center my-4 flex-[0.05]">
           <div className="w-1/4 bg-muted dark:bg-muted-dark bg-none rounded-full p-[2.5px]" />
