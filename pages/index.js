@@ -7,6 +7,7 @@ import { faLocation, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import { useState } from "react";
+import { v4 } from "uuid";
 
 export default function Home({ popular_taxis, taxis }) {
   const [selectedTaxi, setSelectedTaxi] = useState(null);
@@ -56,7 +57,10 @@ export default function Home({ popular_taxis, taxis }) {
         </title>
       </Head>
       <section id="app" className="flex items-start">
-        <Aside popular_taxis={popular_taxis} />
+        <Aside
+          popular_taxis={popular_taxis}
+          handleSelectTaxi={handleSelectTaxi}
+        />
         <section id="app-main" className="p-4">
           <section className="lg:hidden mb-4">
             <section className="mb-4">
@@ -71,10 +75,7 @@ export default function Home({ popular_taxis, taxis }) {
                 className="flex items-center gap-6 overflow-x-scroll snap-mandatory snap-x"
               >
                 {popular_taxis.map((popular_taxi) => (
-                  <li
-                    className="min-w-[90%] snap-start snap-always"
-                    key={popular_taxi._id}
-                  >
+                  <li className="min-w-[90%] snap-start snap-always" key={v4()}>
                     <CardTaxi
                       taxi={popular_taxi}
                       handleSelectTaxi={handleSelectTaxi}

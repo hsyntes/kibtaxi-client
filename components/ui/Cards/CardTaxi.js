@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Avatar from "../Avatar";
+import { v4 } from "uuid";
 
 const CardTaxi = ({ taxi, handleSelectTaxi }) => {
   let taxi_stars = [];
@@ -20,7 +21,7 @@ const CardTaxi = ({ taxi, handleSelectTaxi }) => {
           icon={faStar}
           className="text-primary"
           size="xs"
-          key={`${taxi.taxi_name}'s rating`}
+          key={v4()}
         />
       );
 
