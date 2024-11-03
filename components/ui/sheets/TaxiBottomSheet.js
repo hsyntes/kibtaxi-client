@@ -11,8 +11,13 @@ import {
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Button from "../Button";
 import { v4 } from "uuid";
+import { useRouter } from "next/router";
 
 const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
+  const router = useRouter();
+
+  const handleNavigate = (path) => router.push(`/${taxi._id}`);
+
   let taxi_stars = [];
 
   if (taxi?.taxi_popularity)
@@ -29,7 +34,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
   return (
     <BottomSheet show={show} handleCloseBottomSheet={handleCloseBottomSheet}>
       <section className="grid grid-cols-12">
-        <section className="col-span-3">
+        <section className="col-span-3" onClick={handleNavigate}>
           <div
             style={{
               width: 64,
@@ -52,7 +57,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
           </div>
         </section>
         <section className="col-span-8">
-          <section className="mb-1">
+          <section className="mb-1" onClick={handleNavigate}>
             <h1 className="font-semibold text-xl line-clamp-1">
               {taxi?.taxi_name}
             </h1>
@@ -113,6 +118,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
       <section
         id="review-taxibottomsheet"
         className="max-h-[300px] overflow-y-scroll"
+        onClick={handleNavigate}
       >
         <section className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
           {taxi?.taxi_photos &&
@@ -166,7 +172,12 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
       </section>
       <section className="grid grid-cols-12 items-center mt-auto py-6">
         <section className="col-span-11">
-          <Button type={"button"} variant={"blue"} className={"w-full !py-3"}>
+          <Button
+            type={"button"}
+            variant={"blue"}
+            className={"w-full !py-3"}
+            onClick={handleNavigate}
+          >
             View Full Profile
           </Button>
         </section>

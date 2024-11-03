@@ -57,7 +57,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
           </div>
         </section>
         <section className="col-span-9">
-          <section className="mb-3">
+          <section className="mb-3" onClick={handleNavigate}>
             <h1 className="font-semibold text-xl line-clamp-1">
               {taxi?.taxi_name}
             </h1>
@@ -117,7 +117,10 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
         </section>
       </Modal.Header>
       <hr className="border-none bg-border dark:bg-border-dark h-[1px] my-6" />
-      <Modal.Body classNmae={"max-h-[400px] overflow-y-scroll mb-6"}>
+      <Modal.Body
+        classNmae={"max-h-[400px] overflow-y-scroll cursor-pointer mb-6"}
+        onClick={handleNavigate}
+      >
         <section className="mb-6">
           <ul
             className={`flex items-center ${
@@ -178,7 +181,12 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
       </Modal.Body>
       <Modal.Footer className={"grid grid-cols-12"}>
         <div className="col-span-11">
-          <Button type={"button"} variant={"blue"} className={"w-full !py-3"}>
+          <Button
+            type={"button"}
+            variant={"blue"}
+            className={"w-full !py-3"}
+            onClick={handleNavigate}
+          >
             View Full Profile
           </Button>
         </div>

@@ -49,14 +49,16 @@ body {
 
 #app-aside::-webkit-scrollbar,
 #app-main::-webkit-scrollbar,
-#review-taxibottomsheet::-webkit-scrollbar {
+#review-taxibottomsheet::-webkit-scrollbar,
+#review-taxiprofile::-webkit-scrollbar {
   width: 3px;
   background-color: none;
 }
 
 #app-aside::-webkit-scrollbar-thumb,
 #app-main::-webkit-scrollbar-thumb,
-#review-taxibottomsheet::-webkit-scrollbar-thumb {
+#review-taxibottomsheet::-webkit-scrollbar-thumb,
+#review-taxiprofile::-webkit-scrollbar-thumb {
   background-color: rgb(var(--color-primary));
 }
 
