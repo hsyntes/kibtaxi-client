@@ -26,23 +26,23 @@ body {
 }
 
 #app-navbar {
-  height: 8vh;
+  height: 8svh;
 }
 
 #app {
-  height: 92vh;
+  height: 92svh;
 }
 
 #app-aside {
   width: 30%;
-  height: 92vh;
+  height: 92svh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 #app-main {
   width: 70%;
-  height: 92vh;
+  height: 92svh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
