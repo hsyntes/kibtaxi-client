@@ -51,7 +51,7 @@ const TaxiProfilPage = ({ taxi }) => {
           Kuzey Kıbrıs'ın KKTC Taksi Uygulaması
         </title>
       </Head>
-      <section className="flex gap-6 h-[92vh] overflow-y-auto p-4">
+      <section className="flex gap-6 h-[92svh] overflow-y-auto p-4">
         <section className="lg:w-3/4">
           <section className="flex items-start gap-6">
             <section>
@@ -145,8 +145,8 @@ const TaxiProfilPage = ({ taxi }) => {
               }`}
               onClick={handlePrevSlide}
             >
-              <span>Photos</span>
               <FontAwesomeIcon icon={faImage} />
+              <span>Photos</span>
             </Button>
             <Button
               type={"button"}
@@ -155,8 +155,8 @@ const TaxiProfilPage = ({ taxi }) => {
               }`}
               onClick={handleNextSlide}
             >
-              <span>Comments</span>
               <FontAwesomeIcon icon={faComment} />
+              <span>Comments</span>
             </Button>
           </section>
           <section className="flex overflow-hidden mt-6">
@@ -168,12 +168,12 @@ const TaxiProfilPage = ({ taxi }) => {
                 {taxi?.taxi_photos?.map((taxi_photo) => (
                   <li
                     key={v4()}
-                    className="w-1/2 h-[160px] lg:w-[150px] lg:h-[150px] overflow-hidden rounded p-1 lg:p-0"
+                    className="w-1/2 h-[160px] lg:w-[250px] lg:h-[250px] overflow-hidden rounded p-1 lg:p-0"
                   >
                     <Image
                       src={taxi_photo}
-                      width={148}
-                      height={148}
+                      width={328}
+                      height={328}
                       className="w-full h-full object-fit object-cover object-center"
                       alt={`${taxi?.taxi_name}'s Photos`}
                     />
@@ -186,7 +186,7 @@ const TaxiProfilPage = ({ taxi }) => {
               animate={{ translateX: `-${currentSlide * 100}%` }}
               className="min-w-full overflow-y-scroll lg:hidden"
             >
-              <ul className="space-y-6 mb-6">
+              <ul className="space-y-6">
                 {taxi?.taxi_reviews?.map((taxi_review) => (
                   <li className="flex items-start gap-3" key={v4()}>
                     <section>
@@ -215,7 +215,6 @@ const TaxiProfilPage = ({ taxi }) => {
                         {taxi_review.reviewer_review?.text}
                       </p>
                     </section>
-                    <section></section>
                   </li>
                 ))}
               </ul>
@@ -253,7 +252,6 @@ const TaxiProfilPage = ({ taxi }) => {
                     {taxi_review.reviewer_review?.text}
                   </p>
                 </section>
-                <section></section>
               </li>
             ))}
           </ul>
