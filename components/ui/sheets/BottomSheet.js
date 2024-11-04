@@ -62,7 +62,7 @@ const BottomSheet = ({
   return createPortal(
     <section
       id="bottomsheet-overlay"
-      className="fixed w-screen h-screen top-0 left-0 flex items-center justify-center bg-muted-dark dark:bg-muted select-none z-50"
+      className="fixed w-screen h-[100svh] top-0 left-0 flex items-center justify-center bg-muted-dark dark:bg-muted select-none z-50"
       style={{ display }}
       ref={bottomsheetOverlayRef}
     >
