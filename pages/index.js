@@ -153,15 +153,15 @@ export async function getServerSideProps() {
   const dataIP = await responseIP.json();
   const [lat, long] = dataIP.loc.split(",");
 
-  const dataTaxis = await HttpRequest.get(
-    `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
-  );
-
   // const dataTaxis = await HttpRequest.get(
-  //   `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
-  //     process.env.NEXT_PUBLIC_API_KEY
-  //   }`
+  //   `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
   // );
+
+  const dataTaxis = await HttpRequest.get(
+    `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
+      process.env.NEXT_PUBLIC_API_KEY
+    }`
+  );
 
   const dataCity = await responseCity.json();
 
