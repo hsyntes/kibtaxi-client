@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import { useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { v4 } from "uuid";
 
 const getCurrentPosition = () =>
@@ -26,7 +26,6 @@ export default function Home({}) {
   const [selectedTaxi, setSelectedTaxi] = useState(null);
   const [modal, setModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
-  const queryClient = useQueryClient();
 
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
@@ -134,14 +133,16 @@ export default function Home({}) {
         />
         <section id="app-main" className="p-4">
           <section className="lg:hidden lg:mb-0 mb-4">
-            <section className="flex items-center justify-between mb-2">
+            <section className="flex items-center justify-between mb-3">
               <h6 className="flex items-center gap-2 font-semibold line-clamp-1">
                 <FontAwesomeIcon icon={faRocket} className="text-primary" />
                 <span className="line-clamp-1">Most popular, {city}</span>
               </h6>
               <Button
                 type={"button"}
-                className={"flex items-center gap-2 text-primary !rounded"}
+                className={
+                  "flex items-center gap-2 text-primary !rounded-none !shadow-none !px-0"
+                }
               >
                 <span className="line-clamp-1">{city?.slice(0, 10)}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
@@ -163,8 +164,9 @@ export default function Home({}) {
               </ul>
             </section>
           </section>
+          <br className="lg:hidden" />
           <section>
-            <section className="flex items-center lg:items-start justify-between mb-2">
+            <section className="flex items-center lg:items-start justify-between mb-3 lg:mb-1">
               <h6 className="flex items-center gap-2 font-semibold">
                 <FontAwesomeIcon icon={faLocation} className="text-primary" />
                 <span>Other taxis around you</span>
@@ -172,7 +174,7 @@ export default function Home({}) {
               <Button
                 type={"button"}
                 className={
-                  "hidden lg:flex items-center gap-2 text-primary !rounded"
+                  "hidden lg:flex items-center gap-2 text-primary !rounded-none !shadow-none !px-0"
                 }
               >
                 <span className="line-clamp-1">{city?.slice(0, 10)}</span>
