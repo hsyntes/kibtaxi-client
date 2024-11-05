@@ -18,7 +18,7 @@ const ModalTaxi = ({ show, handleCloseModal, taxi }) => {
 
   let taxi_stars = [];
 
-  const handleNavigate = (path) => router.push(`/${taxi._id}`);
+  const handleNavigate = () => router.push(`/${taxi._id}`);
 
   if (taxi?.taxi_popularity)
     for (let i = 0; i < Math.round(Number(taxi?.taxi_popularity?.rating)); i++)
