@@ -86,7 +86,7 @@ const Navbar = () => {
   return (
     <nav
       id="app-navbar"
-      className="flex items-center justify-between sticky top-0 bg-white dark:bg-black shadow dark:shadow-dark p-4"
+      className="flex items-center justify-between sticky top-0 bg-white dark:bg-black shadow dark:shadow-dark transition-all p-4"
     >
       <Link href={"/"}>
         <Image

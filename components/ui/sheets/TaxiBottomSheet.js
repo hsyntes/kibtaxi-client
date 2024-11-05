@@ -117,7 +117,7 @@ const TaxiBottomSheet = ({ show, handleCloseBottomSheet, taxi }) => {
       <hr className="border-none bg-border dark:bg-border-dark h-[1px] my-6" />
       <section
         id="review-taxibottomsheet"
-        className="max-h-[300px] overflow-y-scroll"
+        className="max-h-[320px] overflow-y-scroll"
         onClick={handleNavigate}
       >
         <section className="flex gap-3 overflow-x-scroll snap-mandatory snap-x mb-6">
