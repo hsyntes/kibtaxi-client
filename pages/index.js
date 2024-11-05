@@ -40,13 +40,17 @@ export default function Home({}) {
       let coords;
 
       try {
-        coords = await getCurrentPosition();
+        const position = await getCurrentPosition();
+        coords = position.coords;
       } catch (e) {
         console.error("Error getting position: ", e);
       }
 
-      const lat = coords?.latitude || 35.1482753;
-      const long = coords?.longitude || 33.5009364;
+      const lat = coords?.latitude || process.env.NEXT_PUBLIC_DEFAULT_LAT;
+      const long = coords?.longitude || process.env.NEXT_PUBLIC_DEFAULT_LONG;
+
+      console.log("Lat: ", lat);
+      console.log("Long: ", long);
 
       const responseCity = await fetch(
         `https://us1.locationiq.com/v1/reverse?key=${process.env.NEXT_PUBLIC_LOCATIONIQ_ACCESS_TOKEN}&lat=${lat}&lon=${long}&format=json&`
