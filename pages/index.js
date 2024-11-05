@@ -12,18 +12,72 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import { useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { v4 } from "uuid";
 
-export default function Home({ popular_taxis, taxis, city }) {
+const getCurrentPosition = () =>
+  new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
+
+export default function Home({}) {
+  const [isLocationAllowed, setIsLocationAllowed] = useState(null);
+  const [popular_taxis, setPopular_taxis] = useState(null);
+  const [taxis, setTaxis] = useState(null);
+  const [city, setCity] = useState(null);
   const [selectedTaxi, setSelectedTaxi] = useState(null);
   const [modal, setModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleOpenModal = () => setModal(true);
   const handleCloseModal = () => setModal(false);
 
   const handleOpenBottomSheet = () => setBottomSheet(true);
   const handleCloseBottomSheet = () => setBottomSheet(false);
+
+  const { isLoading: isTaxisLoading } = useQuery({
+    queryKey: "getTaxis",
+    queryFn: async function () {
+      let coords;
+
+      try {
+        coords = await getCurrentPosition();
+      } catch (e) {
+        console.error("Error getting position: ", e);
+      }
+
+      const lat = coords?.latitude || 35.1482753;
+      const long = coords?.longitude || 33.5009364;
+
+      const responseCity = await fetch(
+        `https://us1.locationiq.com/v1/reverse?key=${process.env.NEXT_PUBLIC_LOCATIONIQ_ACCESS_TOKEN}&lat=${lat}&lon=${long}&format=json&`
+      );
+
+      const dataTaxis = await HttpRequest.get(
+        `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
+      );
+
+      const dataCity = await responseCity.json();
+
+      const { popular_taxis, taxis } = dataTaxis.data;
+      const { address } = dataCity;
+
+      return {
+        popular_taxis,
+        taxis,
+        city: address.city || address.state_district,
+      };
+    },
+    onSuccess: function (data) {
+      if (data) {
+        const { popular_taxis, taxis, city } = data;
+
+        setPopular_taxis(popular_taxis);
+        setTaxis(taxis);
+        setCity(city);
+        setIsLocationAllowed(true);
+      }
+    },
+  });
 
   function handleSelectTaxi(taxi) {
     setSelectedTaxi(taxi);
@@ -45,6 +99,13 @@ export default function Home({ popular_taxis, taxis, city }) {
     return () => clearTimeout(identifier);
   }
 
+  if (isTaxisLoading)
+    return (
+      <center>
+        <p>Loading...</p>
+      </center>
+    );
+
   return (
     <>
       <Head>
@@ -64,20 +125,21 @@ export default function Home({ popular_taxis, taxis, city }) {
       <section id="app" className="flex items-start">
         <Aside
           popular_taxis={popular_taxis}
+          city={city}
           handleSelectTaxi={handleSelectTaxi}
         />
         <section id="app-main" className="p-4">
-          <section className="lg:hidden mb-4">
-            <section className="flex items-center justify-between mb-1">
-              <h6 className="flex items-center gap-2 font-semibold">
+          <section className="lg:hidden lg:mb-0 mb-4">
+            <section className="flex items-center justify-between mb-2">
+              <h6 className="flex items-center gap-2 font-semibold line-clamp-1">
                 <FontAwesomeIcon icon={faRocket} className="text-primary" />
-                <span>Most popular, Famagusta</span>
+                <span className="line-clamp-1">Most popular, {city}</span>
               </h6>
               <Button
                 type={"button"}
                 className={"flex items-center gap-2 text-primary !rounded"}
               >
-                <span>{city?.slice(0, 10)}</span>
+                <span className="line-clamp-1">{city?.slice(0, 10)}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </Button>
             </section>
@@ -86,7 +148,7 @@ export default function Home({ popular_taxis, taxis, city }) {
                 id="popular-taxis"
                 className="flex items-center gap-6 overflow-x-scroll snap-mandatory snap-x"
               >
-                {popular_taxis.map((popular_taxi) => (
+                {popular_taxis?.map((popular_taxi) => (
                   <li className="min-w-[90%] snap-start snap-always" key={v4()}>
                     <CardTaxi
                       taxi={popular_taxi}
@@ -98,7 +160,7 @@ export default function Home({ popular_taxis, taxis, city }) {
             </section>
           </section>
           <section>
-            <section className="flex items-center justify-between mb-1">
+            <section className="flex items-center lg:items-start justify-between mb-2">
               <h6 className="flex items-center gap-2 font-semibold">
                 <FontAwesomeIcon icon={faLocation} className="text-primary" />
                 <span>Other taxis around you</span>
@@ -109,13 +171,13 @@ export default function Home({ popular_taxis, taxis, city }) {
                   "hidden lg:flex items-center gap-2 text-primary !rounded"
                 }
               >
-                <span>{city?.slice(0, 10)}</span>
+                <span className="line-clamp-1">{city?.slice(0, 10)}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </Button>
             </section>
             <section>
               <ul className="grid grid-cols-12 gap-6 items-center">
-                {taxis.map((taxi) => (
+                {taxis?.map((taxi) => (
                   <li className="col-span-12 lg:col-span-6" key={taxi._id}>
                     <CardTaxi taxi={taxi} handleSelectTaxi={handleSelectTaxi} />
                   </li>
@@ -140,39 +202,15 @@ export default function Home({ popular_taxis, taxis, city }) {
 }
 
 export async function getServerSideProps() {
-  const responseIP = await fetch(
-    `https://ipinfo.io/json?token=${process.env.NEXT_PUBLIC_IPINFO_IO_TOKEN}`
-  );
+  const response = await fetch(process.env.NEXT_PUBLIC_API);
+  const data = await response.json();
 
-  const responseCity = await fetch(
-    `https://us1.locationiq.com/v1/reverse?key=${
-      process.env.NEXT_PUBLIC_LOCATIONIQ_ACCESS_TOKEN
-    }&lat=${35.1922456}&lon=${33.3562027}&format=json&`
-  );
-
-  const dataIP = await responseIP.json();
-  const [lat, long] = dataIP.loc.split(",");
-
-  const dataTaxis = await HttpRequest.get(
-    `taxis?lat=${lat}&long=${long}&pt=5&API_KEY=${process.env.NEXT_PUBLIC_API_KEY}`
-  );
-
-  // const dataTaxis = await HttpRequest.get(
-  //   `taxis?lat=${35.1922456}&long=${33.3562027}&pt=5&API_KEY=${
-  //     process.env.NEXT_PUBLIC_API_KEY
-  //   }`
-  // );
-
-  const dataCity = await responseCity.json();
-
-  const { popular_taxis, taxis } = dataTaxis.data;
-  const { address } = dataCity;
+  console.group();
+  console.log("Server status: ", data.status);
+  console.log("Server message: ", data.message);
+  console.groupEnd();
 
   return {
-    props: {
-      popular_taxis,
-      taxis,
-      city: address.city || address.state_district,
-    },
+    props: {},
   };
 }
